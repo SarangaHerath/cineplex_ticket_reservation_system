@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    url: jdbc:mysql://localhost:3306/DB_CINEPLEX?createDatabaseIfNotExist=true&useSSL=false&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/CINEPLEX_DB?createDatabaseIfNotExist=true&useSSL=false&useSSL=false&allowPublicKeyRetrieval=true
     password: 'Saranga@123'
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect

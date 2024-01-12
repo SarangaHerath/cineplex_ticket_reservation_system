@@ -17,6 +17,5 @@ public class RequestMovieDto {
     private Long id;
     private String movieName;
     private String movieDescription;
-    private List<RequestShowTimeDto> requestShowTimeDtoList;
-    private List<RequestSeatDto> requestSeatDtoList;
+
 }

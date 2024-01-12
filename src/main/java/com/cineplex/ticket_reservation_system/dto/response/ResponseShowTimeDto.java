@@ -1,5 +1,6 @@
-package com.cineplex.ticket_reservation_system.dto.request;
+package com.cineplex.ticket_reservation_system.dto.response;
 
+import com.cineplex.ticket_reservation_system.entity.Movie;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,11 +12,9 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Data
 @Builder
-public class RequestShowTimeDto {
-
+public class ResponseShowTimeDto {
     private Long showTimeId;
-    private Long movieId;
-    private int availableSeats;
     private LocalTime time;
-
+    private int availableSeats;
+    private Movie movie;
 }

@@ -12,4 +12,6 @@ public interface MovieService {
     ResponseEntity<CommonResponse> getAllMovie();
 
     ResponseEntity<CommonResponse> getMovieById(Long id);
+
+    ResponseEntity<CommonResponse> deleteMovie(Long id);
 }

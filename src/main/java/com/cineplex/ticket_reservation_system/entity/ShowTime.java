@@ -24,7 +24,10 @@ public class ShowTime {
     @Column(name = "time", columnDefinition = "TIME")
     private LocalTime time;
 
-    @ManyToOne
-    @JoinColumn(name = "movie_id")
+    @Column(name = "available_seats")
+    private int availableSeats;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "movie_id", referencedColumnName = "movie_id", nullable = false)
     private Movie movie;
 }
