@@ -14,8 +14,9 @@ import java.util.List;
 @Builder
 public class RequestMovieDto {
 
-    private Long id;
+    private Long movieId;
     private String movieName;
     private String movieDescription;
+    private List<RequestShowTimeDto> requestShowTimeDtoList;
 
 }

@@ -14,4 +14,6 @@ public interface ShowTimeRepo extends JpaRepository<ShowTime, Long> {
     boolean existsByTime(LocalTime time);
 
     ShowTime findShowTimeByShowTimeId(Long showTimeId);
+
+    List<ShowTime> findShowTimeByMovie_MovieId(Long id);
 }

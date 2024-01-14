@@ -5,7 +5,7 @@ import com.cineplex.ticket_reservation_system.dto.response.CommonResponse;
 import org.springframework.http.ResponseEntity;
 
 public interface ShowTimeService {
-    ResponseEntity<CommonResponse> saveShowTime(RequestShowTimeDto requestShowTimeDto);
+//    ResponseEntity<CommonResponse> saveShowTime(RequestShowTimeDto requestShowTimeDto);
 
     ResponseEntity<CommonResponse> updateShowTime(RequestShowTimeDto requestShowTimeDto);
 
@@ -14,4 +14,6 @@ public interface ShowTimeService {
     ResponseEntity<CommonResponse> getShowTimeById(Long id);
 
     ResponseEntity<CommonResponse> deleteShowTime(Long id);
+
+    ResponseEntity<CommonResponse> getMovieDetails(Long id);
 }

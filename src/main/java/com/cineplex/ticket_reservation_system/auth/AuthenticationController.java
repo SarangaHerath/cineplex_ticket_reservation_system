@@ -1,6 +1,7 @@
 package com.cineplex.ticket_reservation_system.auth;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
 @CrossOrigin
+@Slf4j
 public class AuthenticationController {
 
 

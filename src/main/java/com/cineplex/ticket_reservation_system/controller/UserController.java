@@ -4,6 +4,7 @@ import com.cineplex.ticket_reservation_system.dto.request.RequestUserDto;
 import com.cineplex.ticket_reservation_system.dto.response.CommonResponse;
 import com.cineplex.ticket_reservation_system.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,4 +43,17 @@ public class UserController {
         log.info("hit find user by id user: id {}", id);
         return userService.findUserById(id);
     }
+//    @GetMapping("/details")
+//    public ResponseEntity<User> getUserDetails() {
+//        // Retrieve the currently authenticated user
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String username = authentication.getName();
+//
+//        // Retrieve user details from the database using the username
+//        User user = userRepo.findByUsername(username)
+//                .orElseThrow(() -> new RuntimeException("User not found")); // Customize this as needed
+//
+//        // Return the user details
+//        return ResponseEntity.ok(user);
+//    }
 }

@@ -21,11 +21,11 @@ public class ShowTimeController {
         this.showTimeService = showTimeService;
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<CommonResponse> saveShowTime(@RequestBody RequestShowTimeDto requestShowTimeDto) {
-        log.info("hit movie save dto:{}", requestShowTimeDto);
-        return showTimeService.saveShowTime(requestShowTimeDto);
-    }
+//    @PostMapping("/save")
+//    public ResponseEntity<CommonResponse> saveShowTime(@RequestBody RequestShowTimeDto requestShowTimeDto) {
+//        log.info("hit movie save dto:{}", requestShowTimeDto);
+//        return showTimeService.saveShowTime(requestShowTimeDto);
+//    }
 
     @PutMapping("/update")
     public ResponseEntity<CommonResponse> updateShowTime(@RequestBody RequestShowTimeDto requestShowTimeDto) {
@@ -34,18 +34,24 @@ public class ShowTimeController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<CommonResponse> getAllMovie() {
+    public ResponseEntity<CommonResponse> getAllShowTime() {
         log.info("hit get all movie method");
         return showTimeService.getAllShowTime();
     }
     @GetMapping("/getById/{id}")
-    public ResponseEntity<CommonResponse> getMovieById(@PathVariable Long id) {
+    public ResponseEntity<CommonResponse> getShowTimeById(@PathVariable Long id) {
         log.info("hit get movie by id method");
         return showTimeService.getShowTimeById(id);
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<CommonResponse> deleteMovie(@PathVariable Long id) {
+    public ResponseEntity<CommonResponse> deleteShowTime(@PathVariable Long id) {
         log.info("hit delete movie method");
         return showTimeService.deleteShowTime(id);
+    }
+    @GetMapping("/getMovieDetails/{id}")
+    public ResponseEntity<CommonResponse> getMovieDetails(@PathVariable Long id){
+        log.info("hit get Movie Details");
+        return showTimeService.getMovieDetails(id);
+
     }
 }
