@@ -1,5 +1,6 @@
 package com.cineplex.ticket_reservation_system.entity;
 
+import com.cineplex.ticket_reservation_system.dto.response.ResponseMovieDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,4 +30,13 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShowTime> showTimes;
+
+    public ResponseMovieDto toResponseMovieDto() {
+        // Assuming ResponseMovieDto has a builder or constructor
+        return ResponseMovieDto.builder()
+                .movieId(this.getMovieId())
+                .movieDescription(this.getMovieDescription())
+                .movieName(this.getMovieName())
+                .build();
+    }
 }

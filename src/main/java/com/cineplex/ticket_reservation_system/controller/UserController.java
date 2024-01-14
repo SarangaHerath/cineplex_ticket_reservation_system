@@ -4,7 +4,6 @@ import com.cineplex.ticket_reservation_system.dto.request.RequestUserDto;
 import com.cineplex.ticket_reservation_system.dto.response.CommonResponse;
 import com.cineplex.ticket_reservation_system.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

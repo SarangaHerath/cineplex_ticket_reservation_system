@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -52,11 +53,11 @@ public class MovieServiceImpl implements MovieService {
                         .movieName(requestMovieDto.getMovieName())
                         .movieDescription(requestMovieDto.getMovieDescription())
                         .build();
-                 Movie saveMovie = movieRepo.save(movie);
+                Movie saveMovie = movieRepo.save(movie);
 
                 // show times
 
-                 requestMovieDto.getRequestShowTimeDtoList().stream()
+                requestMovieDto.getRequestShowTimeDtoList().stream()
                         .map(requestShowTimeDto -> {
                             ShowTime showTime = ShowTime.builder()
                                     .showTimeId(requestShowTimeDto.getShowTimeId())
@@ -99,23 +100,20 @@ public class MovieServiceImpl implements MovieService {
                 Movie updateMovie = movieRepo.save(movie);
 
                 // update show time
-               requestMovieDto.getRequestShowTimeDtoList().stream()
-                        .map(
-                                requestShowTimeDto -> {
-                                    ShowTime showTime = showTimeRepo.findById(requestShowTimeDto.getShowTimeId())
-                                            .orElseThrow(() -> new ResourceNotFoundException("ShowTime not found with id: " + requestShowTimeDto.getShowTimeId()));
-                                    showTime.setTime(requestShowTimeDto.getTime());
-                                    showTime.setAvailableSeats(requestShowTimeDto.getAvailableSeats());
-                                    showTime.setMovie(updateMovie);
-                                    return showTimeRepo.save(showTime);
-                                }
-                        )
-                        .toList();
+                requestMovieDto.getRequestShowTimeDtoList().stream()
+                        .map(requestShowTimeDto -> {
+                            ShowTime showTime = showTimeRepo.findById(requestShowTimeDto.getShowTimeId()).get();
+                            showTime.setTime(requestShowTimeDto.getTime());
+                            showTime.setAvailableSeats(requestShowTimeDto.getAvailableSeats());
+                            showTime.setMovie(updateMovie);
+                            return showTimeRepo.save(showTime);
+                        })
+                        .collect(Collectors.toList());
+
 
                 return ResponseEntity.ok(CommonResponse.builder()
                         .responseCode(HttpStatus.OK)
                         .message("Movie, showtime updated successfully")
-                        .data(movie)
                         .build());
 
             } else {

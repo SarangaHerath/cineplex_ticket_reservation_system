@@ -20,27 +20,31 @@ public class ReservationController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<CommonResponse> saveReservation(@RequestBody RequestReservationDto requestReservationDto){
-        log.info("hit saveReservation controller dto :{}",requestReservationDto);
+    public ResponseEntity<CommonResponse> saveReservation(@RequestBody RequestReservationDto requestReservationDto) {
+        log.info("hit saveReservation controller dto :{}", requestReservationDto);
         return reservationService.saveReservation(requestReservationDto);
     }
+
     @PutMapping("/update")
-    public ResponseEntity<CommonResponse> updateReservation(@RequestBody RequestReservationDto requestReservationDto){
-        log.info("hit updateReservation controller dto :{}",requestReservationDto);
+    public ResponseEntity<CommonResponse> updateReservation(@RequestBody RequestReservationDto requestReservationDto) {
+        log.info("hit updateReservation controller dto :{}", requestReservationDto);
         return reservationService.updateReservation(requestReservationDto);
     }
+
     @GetMapping("/getAll")
-    public ResponseEntity<CommonResponse> getAllReservation(){
+    public ResponseEntity<CommonResponse> getAllReservation() {
         log.info("hit updateReservation controller");
         return reservationService.getAllReservation();
     }
+
     @GetMapping("/getReservationById/{id}")
-    public ResponseEntity<CommonResponse> getReservationById(@PathVariable Long id){
+    public ResponseEntity<CommonResponse> getReservationById(@PathVariable Long id) {
         log.info("hit getReservationById controller");
         return reservationService.getReservationById(id);
     }
+
     @DeleteMapping("/cancel/{id}")
-    public ResponseEntity<CommonResponse> cancelReservation(@PathVariable Long id){
+    public ResponseEntity<CommonResponse> cancelReservation(@PathVariable Long id) {
         log.info("hit cancelReservation controller");
         return reservationService.cancelReservation(id);
     }

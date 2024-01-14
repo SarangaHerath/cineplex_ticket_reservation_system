@@ -1,8 +1,7 @@
 package com.cineplex.ticket_reservation_system.service.impl;
 
 import com.cineplex.ticket_reservation_system.dto.request.RequestReservationDto;
-import com.cineplex.ticket_reservation_system.dto.response.CommonResponse;
-import com.cineplex.ticket_reservation_system.dto.response.ResponseReservationDto;
+import com.cineplex.ticket_reservation_system.dto.response.*;
 import com.cineplex.ticket_reservation_system.entity.*;
 import com.cineplex.ticket_reservation_system.exceptions.InternalServerException;
 import com.cineplex.ticket_reservation_system.exceptions.ResourceNotFoundException;
@@ -85,11 +84,10 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     @Transactional
     public ResponseEntity<CommonResponse> updateReservation(RequestReservationDto requestReservationDto) {
-        log.info("hit updateReservation serviceImpl: {}",requestReservationDto);
+        log.info("hit updateReservation serviceImpl: {}", requestReservationDto);
         try {
             Long reservationId = requestReservationDto.getReservationId();
-            Reservation existingReservation = reservationRepo.findById(reservationId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Reservation not found with id: " + reservationId));
+            Reservation existingReservation = reservationRepo.findById(reservationId).get();
 
             // Check if noOfSeat has changed
             int oldNoOfSeat = existingReservation.getNoOfSeat();
@@ -98,8 +96,7 @@ public class ReservationServiceImpl implements ReservationService {
             if (oldNoOfSeat != newNoOfSeat) {
                 // Update availableSeat in ShowTime based on the change in noOfSeat
                 Long showTimeId = existingReservation.getShowTime().getShowTimeId();
-                ShowTime showTime = showTimeRepo.findById(showTimeId)
-                        .orElseThrow(() -> new ResourceNotFoundException("ShowTime not found with id: " + showTimeId));
+                ShowTime showTime = showTimeRepo.findById(showTimeId).get();
 
                 // Calculate the change in available seats
                 int seatChange = newNoOfSeat - oldNoOfSeat;
@@ -110,18 +107,18 @@ public class ReservationServiceImpl implements ReservationService {
 
                 // Save the updated ShowTime entity
                 showTimeRepo.save(showTime);
-
             }
+
             // Update other fields in the Reservation entity based on requestReservationDto
             existingReservation.setNoOfSeat(newNoOfSeat);
             existingReservation.setCreatedDate(LocalDate.now());
 
-
             // Save the updated Reservation entity
-            Reservation savedReservation = reservationRepo.save(existingReservation);
+            ResponseReservationDto responseDto = ResponseReservationDto.fromReservation(existingReservation);
+
 
             return ResponseEntity.ok(CommonResponse.builder()
-                    .data(savedReservation)
+                    .data(responseDto)
                     .responseCode(HttpStatus.OK)
                     .message("Update successful")
                     .build());
@@ -131,6 +128,7 @@ public class ReservationServiceImpl implements ReservationService {
             throw new InternalServerException("Error occur during update reservation");
         }
     }
+
 
     @Override
     public ResponseEntity<CommonResponse> getAllReservation() {
@@ -142,18 +140,17 @@ public class ReservationServiceImpl implements ReservationService {
                             .createdDate(reservation.getCreatedDate())
                             .noOfSeat(reservation.getNoOfSeat())
                             .status(reservation.getStatus())
-                            .movie(reservation.getMovie())
-                            .showTime(reservation.getShowTime())
-                            .user(reservation.getUser())
+                            .responseMovieDto(ResponseMovieDto.fromMovieEntity(reservation.getMovie()))
+                            .responseShowTimeDto(ResponseShowTimeDto.fromShowTimeEntity(reservation.getShowTime()))
+                            .responseUserDto(ResponseUserDto.fromUserEntity(reservation.getUser()))
                             .build())
                     .toList();
             return ResponseEntity.ok(CommonResponse.builder()
-                            .message("Get all reservation successful")
-                            .responseCode(HttpStatus.OK)
-                            .data(responseReservationDtoList)
+                    .message("Get all reservation successful")
+                    .responseCode(HttpStatus.OK)
+                    .data(responseReservationDtoList)
                     .build());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             log.error("Error get all reservation : {}", e.getMessage());
             throw new InternalServerException("Error occur during get all reservation");
         }
@@ -172,10 +169,9 @@ public class ReservationServiceImpl implements ReservationService {
                             .noOfSeat(reservation.getNoOfSeat())
                             .createdDate(reservation.getCreatedDate())
                             .status(reservation.getStatus())
-                            .movie(reservation.getMovie())
-                            .showTime(reservation.getShowTime())
-                            .user(reservation.getUser())
-                            .build();
+                            .responseMovieDto(ResponseMovieDto.fromMovieEntity(reservation.getMovie()))
+                            .responseShowTimeDto(ResponseShowTimeDto.fromShowTimeEntity(reservation.getShowTime()))
+                            .responseUserDto(ResponseUserDto.fromUserEntity(reservation.getUser())).build();
                     return ResponseEntity.ok(CommonResponse.builder()
                             .data(responseReservationDto)
                             .responseCode(HttpStatus.OK)
@@ -205,7 +201,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional
     public ResponseEntity<CommonResponse> cancelReservation(Long id) {
         try {
-            if(reservationRepo.existsById(id)){
+            if (reservationRepo.existsById(id)) {
                 // delete
                 Reservation reservation = reservationRepo.findById(id).get();
                 reservation.setStatus(Status.CANCEL);
@@ -214,22 +210,21 @@ public class ReservationServiceImpl implements ReservationService {
                 // update available seats
                 int seatQty = reservation.getNoOfSeat();
                 ShowTime showTime = showTimeRepo.findShowTimeByShowTimeId(reservation.getShowTime().getShowTimeId());
-                showTime.setAvailableSeats(showTime.getAvailableSeats()+seatQty);
+                showTime.setAvailableSeats(showTime.getAvailableSeats() + seatQty);
                 showTimeRepo.save(showTime);
 
                 return ResponseEntity.ok(CommonResponse.builder()
-                                .message("Delete success")
-                                .responseCode(HttpStatus.NO_CONTENT)
+                        .message("Delete success")
+                        .responseCode(HttpStatus.NO_CONTENT)
                         .build());
-            }
-            else {
+            } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(CommonResponse.builder()
                                 .message("Can not find reservation with this id")
                                 .responseCode(HttpStatus.NOT_FOUND)
                                 .build());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new InternalServerException("Error occur during delete reservation");
 

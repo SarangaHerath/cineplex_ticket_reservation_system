@@ -1,9 +1,7 @@
 package com.cineplex.ticket_reservation_system.dto.response;
 
-import com.cineplex.ticket_reservation_system.entity.Movie;
-import com.cineplex.ticket_reservation_system.entity.ShowTime;
+import com.cineplex.ticket_reservation_system.entity.Reservation;
 import com.cineplex.ticket_reservation_system.entity.Status;
-import com.cineplex.ticket_reservation_system.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +18,21 @@ public class ResponseReservationDto {
     private Status status;
     private LocalDate createdDate;
     private int noOfSeat;
-    private Movie movie;
-    private ShowTime showTime;
-    private User user;
+    private ResponseMovieDto responseMovieDto;
+    private ResponseShowTimeDto responseShowTimeDto;
+    private ResponseUserDto responseUserDto;
+
+    // Constructor to convert Reservation to ResponseReservationDto
+    public static ResponseReservationDto fromReservation(Reservation reservation) {
+        return ResponseReservationDto.builder()
+                .reservationId(reservation.getReservationId())
+                .status(reservation.getStatus())
+                .createdDate(reservation.getCreatedDate())
+                .noOfSeat(reservation.getNoOfSeat())
+                .responseMovieDto(ResponseMovieDto.fromMovieEntity(reservation.getMovie()))
+                .responseShowTimeDto(ResponseShowTimeDto.fromShowTimeEntity(reservation.getShowTime()))
+                .responseUserDto(ResponseUserDto.fromUserEntity(reservation.getUser()))
+                .build();
+    }
+
 }

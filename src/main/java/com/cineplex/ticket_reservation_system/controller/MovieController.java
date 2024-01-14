@@ -36,11 +36,13 @@ public class MovieController {
         log.info("hit get all movie method");
         return movieService.getAllMovie();
     }
+
     @GetMapping("/getById/{id}")
     public ResponseEntity<CommonResponse> getMovieById(@PathVariable Long id) {
         log.info("hit get movie by id method");
         return movieService.getMovieById(id);
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<CommonResponse> deleteMovie(@PathVariable Long id) {
         log.info("hit delete movie method");

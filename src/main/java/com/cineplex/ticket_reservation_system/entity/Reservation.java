@@ -28,7 +28,7 @@ public class Reservation {
     @Column(name = "created_date")
     private LocalDate createdDate;
 
-    @Column(name = "no_of_seat",nullable = false)
+    @Column(name = "no_of_seat", nullable = false)
     private int noOfSeat;
 
     @ManyToOne(cascade = CascadeType.ALL)
