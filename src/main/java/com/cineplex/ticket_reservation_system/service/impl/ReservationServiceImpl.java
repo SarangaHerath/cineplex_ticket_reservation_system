@@ -1,5 +1,6 @@
 package com.cineplex.ticket_reservation_system.service.impl;
 
+import com.cineplex.ticket_reservation_system.dto.request.RequestChangeStatusDto;
 import com.cineplex.ticket_reservation_system.dto.request.RequestReservationDto;
 import com.cineplex.ticket_reservation_system.dto.response.*;
 import com.cineplex.ticket_reservation_system.entity.*;
@@ -230,6 +231,43 @@ public class ReservationServiceImpl implements ReservationService {
 
         }
     }
+
+//    @Override
+//    public ResponseEntity<CommonResponse> changeStatus(RequestChangeStatusDto requestChangeStatusDto) {
+//        try {
+//            Reservation reservation = reservationRepo.findById(requestChangeStatusDto.getReservationId()).orElseThrow(() -> new ResourceNotFoundException("Reservation not found"));
+//
+//            // Convert the String status to the corresponding Status enum value
+//            Status newStatus = Status.valueOf(requestChangeStatusDto.getStatus());
+//
+//            reservation.setStatus(newStatus);
+//
+//            // Save the updated reservation
+//            reservationRepo.save(reservation);
+//
+//            return ResponseEntity.ok(CommonResponse.builder()
+//                    .responseCode(HttpStatus.OK)
+//                    .message("Reservation status changed successfully")
+//                    .data(reservation)
+//                    .build());
+//
+//        } catch (IllegalArgumentException e) {
+//            // Handle the case where the provided status string doesn't match any enum constant
+//            return ResponseEntity.badRequest().body(CommonResponse.builder()
+//                    .responseCode(HttpStatus.BAD_REQUEST)
+//                    .message("Invalid status value")
+//                    .build());
+//        } catch (Exception e) {
+//            // Handle other exceptions
+//            log.error("Error changing reservation status: {}", e.getMessage());
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(CommonResponse.builder()
+//                            .responseCode(HttpStatus.INTERNAL_SERVER_ERROR)
+//                            .message("Error changing reservation status")
+//                            .build());
+//        }
+//    }
+//
 
 }
 

@@ -1,5 +1,6 @@
 package com.cineplex.ticket_reservation_system.controller;
 
+import com.cineplex.ticket_reservation_system.dto.request.RequestChangeStatusDto;
 import com.cineplex.ticket_reservation_system.dto.request.RequestReservationDto;
 import com.cineplex.ticket_reservation_system.dto.response.CommonResponse;
 import com.cineplex.ticket_reservation_system.service.ReservationService;
@@ -48,4 +49,9 @@ public class ReservationController {
         log.info("hit cancelReservation controller");
         return reservationService.cancelReservation(id);
     }
+//    @PostMapping("/changeStatus")
+//    public ResponseEntity<CommonResponse> changeStatus(@RequestBody RequestChangeStatusDto requestChangeStatusDto){
+//        log.info("hit cancelReservation controller");
+//        return reservationService.changeStatus(requestChangeStatusDto);
+//    }
 }

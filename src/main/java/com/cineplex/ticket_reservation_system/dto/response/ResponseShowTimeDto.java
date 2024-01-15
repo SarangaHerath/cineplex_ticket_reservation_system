@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @AllArgsConstructor
@@ -16,6 +17,7 @@ public class ResponseShowTimeDto {
     private Long showTimeId;
     private LocalTime time;
     private int availableSeats;
+    private LocalDate date;
     private ResponseMovieDto responseMovieDto;
 
     // Method to populate ResponseShowTimeDto from ShowTime entity
@@ -23,6 +25,7 @@ public class ResponseShowTimeDto {
         return ResponseShowTimeDto.builder()
                 .showTimeId(showTime.getShowTimeId())
                 .time(showTime.getTime())
+                .date(showTime.getDate())
                 .availableSeats(showTime.getAvailableSeats())
                 .responseMovieDto(ResponseMovieDto.fromMovieEntity(showTime.getMovie()))
                 .build();

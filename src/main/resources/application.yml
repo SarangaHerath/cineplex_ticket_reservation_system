@@ -6,6 +6,7 @@ spring:
     password: 'Saranga@123'
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
     hibernate:
       ddl-auto: update
 server:

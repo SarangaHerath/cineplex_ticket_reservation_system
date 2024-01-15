@@ -62,6 +62,7 @@ public class MovieServiceImpl implements MovieService {
                             ShowTime showTime = ShowTime.builder()
                                     .showTimeId(requestShowTimeDto.getShowTimeId())
                                     .time(requestShowTimeDto.getTime())
+                                    .date(requestShowTimeDto.getDate())
                                     .availableSeats(requestShowTimeDto.getAvailableSeats())
                                     .movie(saveMovie)
                                     .build();
@@ -104,6 +105,7 @@ public class MovieServiceImpl implements MovieService {
                         .map(requestShowTimeDto -> {
                             ShowTime showTime = showTimeRepo.findById(requestShowTimeDto.getShowTimeId()).get();
                             showTime.setTime(requestShowTimeDto.getTime());
+                            showTime.setDate(requestShowTimeDto.getDate());
                             showTime.setAvailableSeats(requestShowTimeDto.getAvailableSeats());
                             showTime.setMovie(updateMovie);
                             return showTimeRepo.save(showTime);

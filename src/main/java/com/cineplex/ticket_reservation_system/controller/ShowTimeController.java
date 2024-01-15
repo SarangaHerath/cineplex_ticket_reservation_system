@@ -1,5 +1,6 @@
 package com.cineplex.ticket_reservation_system.controller;
 
+import com.cineplex.ticket_reservation_system.dto.request.RequestShowTimeDto;
 import com.cineplex.ticket_reservation_system.dto.response.CommonResponse;
 import com.cineplex.ticket_reservation_system.service.ShowTimeService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +21,11 @@ public class ShowTimeController {
     }
 
 
-//    @PutMapping("/update")
-//    public ResponseEntity<CommonResponse> updateShowTime(@RequestBody RequestShowTimeDto requestShowTimeDto) {
-//        log.info("hit movie update dto:{}", requestShowTimeDto);
-//        return showTimeService.updateShowTime(requestShowTimeDto);
-//    }
+    @PutMapping("/update")
+    public ResponseEntity<CommonResponse> updateShowTime(@RequestBody RequestShowTimeDto requestShowTimeDto) {
+        log.info("hit movie update dto:{}", requestShowTimeDto);
+        return showTimeService.updateShowTime(requestShowTimeDto);
+    }
 
     @GetMapping("/getAll")
     public ResponseEntity<CommonResponse> getAllShowTime() {
@@ -38,11 +39,11 @@ public class ShowTimeController {
         return showTimeService.getShowTimeById(id);
     }
 
-    //    @DeleteMapping("/delete/{id}")
-//    public ResponseEntity<CommonResponse> deleteShowTime(@PathVariable Long id) {
-//        log.info("hit delete movie method");
-//        return showTimeService.deleteShowTime(id);
-//    }
+        @DeleteMapping("/delete/{id}")
+    public ResponseEntity<CommonResponse> deleteShowTime(@PathVariable Long id) {
+        log.info("hit delete movie method");
+        return showTimeService.deleteShowTime(id);
+    }
     @GetMapping("/getMovieDetails/{id}")
     public ResponseEntity<CommonResponse> getMovieDetails(@PathVariable Long id) {
         log.info("hit get Movie Details");

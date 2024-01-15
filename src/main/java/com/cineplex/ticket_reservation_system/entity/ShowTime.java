@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @AllArgsConstructor
@@ -27,7 +28,10 @@ public class ShowTime {
     @Column(name = "available_seats")
     private int availableSeats;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @Column(name = "date",nullable = false)
+    private LocalDate date;
+
+    @ManyToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "movie_id", nullable = false)
     private Movie movie;
 }
