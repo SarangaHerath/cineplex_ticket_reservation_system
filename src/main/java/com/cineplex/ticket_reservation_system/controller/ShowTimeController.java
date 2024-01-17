@@ -39,19 +39,21 @@ public class ShowTimeController {
         return showTimeService.getShowTimeById(id);
     }
 
-        @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<CommonResponse> deleteShowTime(@PathVariable Long id) {
         log.info("hit delete movie method");
         return showTimeService.deleteShowTime(id);
     }
+
     @GetMapping("/getMovieDetails/{id}")
     public ResponseEntity<CommonResponse> getMovieDetails(@PathVariable Long id) {
         log.info("hit get Movie Details");
         return showTimeService.getMovieDetails(id);
 
     }
+
     @GetMapping("/getAvailableSeat/{id}")
-    public ResponseEntity<CommonResponse> getAvailableSeatById(@PathVariable Long id){
+    public ResponseEntity<CommonResponse> getAvailableSeatById(@PathVariable Long id) {
         log.info("hit get available seat by id");
         return showTimeService.getAvailableSeatById(id);
 

@@ -25,9 +25,9 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest registerRequest) {
         try {
-            boolean usernameExists  = userRepo.findUserByUsername(registerRequest.getUsername());
-            if(usernameExists ){
-                 throw new UsernameAlreadyExistsException("Username already exists");
+            boolean usernameExists = userRepo.findUserByUsername(registerRequest.getUsername());
+            if (usernameExists) {
+                throw new UsernameAlreadyExistsException("Username already exists");
             }
             var user = User.builder()
                     .firstName(registerRequest.getFirstName())
@@ -44,7 +44,7 @@ public class AuthenticationService {
                     .token(jwtToken)
                     .user(user)
                     .build();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new InternalServerException("Error occur during register");
         }
 

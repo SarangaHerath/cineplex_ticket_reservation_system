@@ -1,6 +1,5 @@
 package com.cineplex.ticket_reservation_system.service;
 
-import com.cineplex.ticket_reservation_system.dto.request.RequestChangeStatusDto;
 import com.cineplex.ticket_reservation_system.dto.request.RequestReservationDto;
 import com.cineplex.ticket_reservation_system.dto.response.CommonResponse;
 import org.springframework.http.ResponseEntity;

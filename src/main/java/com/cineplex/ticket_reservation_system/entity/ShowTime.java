@@ -28,7 +28,7 @@ public class ShowTime {
     @Column(name = "available_seats")
     private int availableSeats;
 
-    @Column(name = "date",nullable = false)
+    @Column(name = "date", nullable = false)
     private LocalDate date;
 
     @ManyToOne
