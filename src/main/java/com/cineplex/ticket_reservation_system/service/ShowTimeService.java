@@ -15,4 +15,6 @@ public interface ShowTimeService {
     ResponseEntity<CommonResponse> deleteShowTime(Long id);
 
     ResponseEntity<CommonResponse> getMovieDetails(Long id);
+
+    ResponseEntity<CommonResponse> getAvailableSeatById(Long id);
 }

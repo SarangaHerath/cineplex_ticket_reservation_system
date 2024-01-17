@@ -16,5 +16,7 @@ public interface ReservationService {
 
     ResponseEntity<CommonResponse> cancelReservation(Long id);
 
+    ResponseEntity<CommonResponse> getReservationByUserId(Long id);
+
 //    ResponseEntity<CommonResponse> changeStatus(RequestChangeStatusDto requestChangeStatusDto);
 }

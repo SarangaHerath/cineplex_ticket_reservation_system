@@ -15,4 +15,6 @@ public interface ShowTimeRepo extends JpaRepository<ShowTime, Long> {
     ShowTime findShowTimeByShowTimeId(Long showTimeId);
 
     List<ShowTime> findShowTimeByMovie_MovieId(Long id);
+
+
 }

@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -109,9 +110,10 @@ public class ReservationServiceImpl implements ReservationService {
                 // Save the updated ShowTime entity
                 showTimeRepo.save(showTime);
             }
-
+            ShowTime showTime = showTimeRepo.findShowTimeByShowTimeId(requestReservationDto.getShowTimeId());
             // Update other fields in the Reservation entity based on requestReservationDto
             existingReservation.setNoOfSeat(newNoOfSeat);
+            existingReservation.setShowTime(showTime);
             existingReservation.setCreatedDate(LocalDate.now());
 
             // Save the updated Reservation entity
@@ -231,6 +233,41 @@ public class ReservationServiceImpl implements ReservationService {
 
         }
     }
+
+    @Override
+    public ResponseEntity<CommonResponse> getReservationByUserId(Long id) {
+        try {
+            List<Reservation> reservations = reservationRepo.findReservationByUser_UserId(id);
+
+            // Check if reservations exist for the given username
+            if (reservations.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(CommonResponse.builder()
+                                .message("No reservations found for the userId: " + id)
+                                .responseCode(HttpStatus.NOT_FOUND)
+                                .build());
+            }
+
+            // Map Reservation entities to ResponseReservationDto
+            List<ResponseReservationDto> responseReservations = reservations.stream()
+                    .map(ResponseReservationDto::fromReservation)
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(CommonResponse.builder()
+                    .data(responseReservations)
+                    .message("Get reservations by user id success")
+                    .responseCode(HttpStatus.OK)
+                    .build());
+        } catch (Exception e) {
+            // Handle exceptions accordingly
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(CommonResponse.builder()
+                            .message("Error retrieving reservations for the user: " + id)
+                            .responseCode(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .build());
+        }
+    }
+
 
 //    @Override
 //    public ResponseEntity<CommonResponse> changeStatus(RequestChangeStatusDto requestChangeStatusDto) {

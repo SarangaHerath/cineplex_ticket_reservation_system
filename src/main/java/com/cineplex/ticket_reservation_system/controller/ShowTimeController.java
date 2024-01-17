@@ -50,4 +50,10 @@ public class ShowTimeController {
         return showTimeService.getMovieDetails(id);
 
     }
+    @GetMapping("/getAvailableSeat/{id}")
+    public ResponseEntity<CommonResponse> getAvailableSeatById(@PathVariable Long id){
+        log.info("hit get available seat by id");
+        return showTimeService.getAvailableSeatById(id);
+
+    }
 }

@@ -54,4 +54,10 @@ public class ReservationController {
 //        log.info("hit cancelReservation controller");
 //        return reservationService.changeStatus(requestChangeStatusDto);
 //    }
+
+    @GetMapping("getReservationByUserId/{id}")
+    public ResponseEntity<CommonResponse> getReservationByUserId(@PathVariable Long id){
+        log.info("hit getReservationByUserName controller");
+        return reservationService.getReservationByUserId(id);
+    }
 }

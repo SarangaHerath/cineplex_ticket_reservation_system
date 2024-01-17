@@ -187,4 +187,20 @@ public class ShowTimeServiceImpl implements ShowTimeService {
         }
 
     }
+
+    @Override
+    public ResponseEntity<CommonResponse> getAvailableSeatById(Long id) {
+        try {
+             ShowTime showTime = showTimeRepo.findById(id).get();
+             int availableSeats = showTime.getAvailableSeats();
+             return ResponseEntity.ok(CommonResponse.builder()
+                             .message("Success get available seats")
+                             .responseCode(HttpStatus.OK)
+                             .data(availableSeats)
+                     .build());
+        }catch (Exception e){
+            throw new InternalServerException("error during get available seat");
+        }
+
+    }
 }
