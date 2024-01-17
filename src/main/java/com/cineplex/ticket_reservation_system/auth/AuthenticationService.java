@@ -3,6 +3,8 @@ package com.cineplex.ticket_reservation_system.auth;
 import com.cineplex.ticket_reservation_system.config.JwtService;
 import com.cineplex.ticket_reservation_system.entity.Roles;
 import com.cineplex.ticket_reservation_system.entity.User;
+import com.cineplex.ticket_reservation_system.exceptions.InternalServerException;
+import com.cineplex.ticket_reservation_system.exceptions.UsernameAlreadyExistsException;
 import com.cineplex.ticket_reservation_system.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,21 +24,30 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest registerRequest) {
-        var user = User.builder()
-                .firstName(registerRequest.getFirstName())
-                .lastName(registerRequest.getLastName())
-                .username(registerRequest.getUsername())
-                .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .roles(Roles.USER)
-                .build();
+        try {
+            boolean usernameExists  = userRepo.findUserByUsername(registerRequest.getUsername());
+            if(usernameExists ){
+                 throw new UsernameAlreadyExistsException("Username already exists");
+            }
+            var user = User.builder()
+                    .firstName(registerRequest.getFirstName())
+                    .lastName(registerRequest.getLastName())
+                    .username(registerRequest.getUsername())
+                    .password(passwordEncoder.encode(registerRequest.getPassword()))
+                    .roles(Roles.USER)
+                    .build();
 
-        userRepo.save(user);
-        var jwtToken = jwtService.generateToken(user);
+            userRepo.save(user);
+            var jwtToken = jwtService.generateToken(user);
 
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .user(user)
-                .build();
+            return AuthenticationResponse.builder()
+                    .token(jwtToken)
+                    .user(user)
+                    .build();
+        }catch (Exception e){
+            throw new InternalServerException("Error occur during register");
+        }
+
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
